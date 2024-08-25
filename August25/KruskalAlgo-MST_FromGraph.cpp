@@ -51,6 +51,12 @@ struct Graph
 		}
 	}
 
+	bool containsCycle()
+	{
+		//for()... yeah
+
+		return false; 
+	}
 };
 
 Graph makeFirstExampleGraph()
@@ -111,7 +117,22 @@ Graph makeMinSpanTree_WithKruskal(Graph graph)
 		//Step 3: 
 		//Select remaining edge of minimum weight 
 		//that does NOT form a cycle with previously-selected edges: 
-		 
+
+		//First, find minWeightEdge (as above): 
+		minWeightEdge = graph.returnMinWeightEdge();
+
+		//ONLY insert that edge if it does not form a cycle: 
+		bool doesEdgeMakeCycle = minSpanTree.containsCycle(); //use function here ...
+
+		if (doesEdgeMakeCycle == false)
+		{
+			minSpanTree.edges.push_back(minWeightEdge); 
+		}
+
+		//remove the edge regardless 
+		it = std::find(graph.edges.begin(), graph.edges.end(), minWeightEdge);
+		graph.edges.erase(it);
+
 	}
 
 	return minSpanTree; 
@@ -123,6 +144,7 @@ int main()
 
 	auto minSpanTree = makeMinSpanTree_WithKruskal(graph); 
 
+	cout << "Yes?\n";
 
 	return 0; 
 }
